@@ -64,10 +64,15 @@ class Viewer extends Component {
 	}
 }
 //resizeMode="cover"           // Fill the whole screen at aspect ratio.
-
 const $$ = require('../style').create({
-	'viewer': {},
-	'viewer-video': {},
+	'viewer': {
+		position: 'absolute',
+		left: 0, bottom: 0, right: 0,
+	},
+	'viewer-video': {
+		height: 100,
+		width: 200,
+	},
 	'viewer-overlay': {},
 })
 

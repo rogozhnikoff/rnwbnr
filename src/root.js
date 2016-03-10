@@ -9,12 +9,11 @@ import React, {
 		StatusBarIOS
 		} from 'react-native';
 
-import Viewer from './src/view/components/viewer';
-import Chat from './src/view/components/chat';
+import Viewer from './view/components/viewer';
+import Chat from './view/components/chat';
 import moment from 'moment';
-moment.locale('ru', require('moment/locale/ru'));
 
-import ErrorView from './src/view/components/error';
+import ErrorView from './view/components/error';
 import {$$} from './view/style'
 import {
 		pick, assign, map, uniqId, reject
@@ -32,12 +31,13 @@ class Root extends Component {
 		super(props);
 
 		this.state = initialState;
-
+	}
+	componentDidMount() {
 		this.downloadMessages();
 		// dirty: refresh messages
-		setInterval(() => {
-			if (!this.state.messages.inProcess) this.downloadMessages()
-		}, 5000);
+		//setInterval(() => {
+		//	if (!this.state.messages.inProcess) this.downloadMessages()
+		//}, 5000);
 	}
 
 	/** ACTIONS */
@@ -56,8 +56,8 @@ class Root extends Component {
 						inProcess: false,
 						list: map(res, richMessages)
 					})
-				}));
-		//.catch(() => )
+				}))
+			.catch(() => console.error('downloadMessages', arguments))
 	}
 
 	addMessage(text) {
@@ -82,7 +82,7 @@ class Root extends Component {
 				.then((res) => {
 					const list = map(this.state.messages.list, (m) => {
 						if (m.id === _randomId) {
-							return assign({}, m, {
+							return assign({}, res.data, {
 								status: res.status === 'success' ? 'saved' : 'error'
 							})
 						}
@@ -95,14 +95,15 @@ class Root extends Component {
 							list
 						})
 					})
-				});
+				})
+				.catch(() => console.error('addMessage', arguments))
 	}
 
 	removeMessage(removeId) {
 		console.log('root::removeMessage', arguments);
 
 		this.setState({
-			messages: assign({}, messages, {
+			messages: assign({}, this.state.messages, {
 				inProcess: true,
 				list: this.state.messages.list.map((m) => {
 					if (m.id === removeId) {
@@ -138,7 +139,8 @@ class Root extends Component {
 							list
 						})
 					})
-				});
+				})
+				.catch(() => console.error('removeMessage', arguments))
 	}
 
 	/** END: ACTIONS */
@@ -150,7 +152,7 @@ class Root extends Component {
 				<View style={$$('container')}>
 					<ErrorView message={appError} />
 					<Viewer {...stream} />
-					<Chat messages={messages.list} onMessageSubmit={this.addMessage} onMessageDelete={this.removeMessage} />
+					<Chat messages={messages.list} onMessageSubmit={this.addMessage.bind(this)} onMessageDelete={this.removeMessage.bind(this)} />
 				</View>
 		);
 	}
@@ -170,4 +172,4 @@ const initialState = {
 	},
 };
 
-export default Root
+export default Root;

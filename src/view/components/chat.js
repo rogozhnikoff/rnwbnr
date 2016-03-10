@@ -6,7 +6,8 @@ import React, {
 		Text,
 		View,
 		ListView,
-		TouchableOpacity
+		TouchableOpacity,
+		TextInput
 		} from 'react-native';
 
 const DS = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -33,6 +34,7 @@ class Chat extends Component {
 	}
 
 	renderMessage(m, xxx, index) {
+		console.log('m.status', m.status);
 		var i = parseInt(index),
 				bgStyle = i % 2 === 0 ? $$('message-odd') : $$('message-even'),
 				statusStyle = $$('message-status-' + m.status);
@@ -50,6 +52,8 @@ class Chat extends Component {
 		const {style, messages} = this.props;
 		const {field} = this.state;
 		const dataSource = DS.cloneWithRows(messages);
+
+		console.log('RENDER:CHAT', this.props);
 
 		return (<View style={[$$('chat'), style]}>
 			<ListView
@@ -70,19 +74,32 @@ class Chat extends Component {
 	}
 }
 
-
-const $$ = require('../style').create({
+import {create, color} from '../style';
+const $$ = create({
 	'chat': {},
 	'list': {},
-	'message': {},
-	'message-status-adding': {},
-	'message-status-deleting': {},
-	'message-status-saved': {},
-	'message-status-error': {},
+	'message': {
+		backgroundColor: color.lightgray
+	},
+
+	'message-status-adding': {
+		backgroundColor: color.gray
+	},
+	'message-status-deleting': {
+		backgroundColor: color.pink
+	},
+	'message-status-saved': {
+		backgroundColor: color.green
+	},
+	'message-status-error': {
+		backgroundColor: color.red
+	},
 
 	'message-odd': {},
 	'message-even': {},
-	'message-text': {},
+	'message-text': {
+		color: 'white'
+	},
 	'message-date': {},
 
 	'field': {},

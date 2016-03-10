@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {map, reduce, assign} from 'lodash'
 
-import util from './util/style'
+import util from '../util/style'
 
 /* tnx http://tintui.com/ for color tables */
 const color = {
@@ -86,7 +86,7 @@ const create = function create(componentStyles) {
 };
 
 
-export default {
+export {
 	util,
 	color,
 	font,
