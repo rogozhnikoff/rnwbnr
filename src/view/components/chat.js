@@ -34,15 +34,18 @@ class Chat extends Component {
 	}
 
 	renderMessage(m, xxx, index) {
-		console.log('m.status', m.status);
-		var i = parseInt(index),
-				bgStyle = i % 2 === 0 ? $$('message-odd') : $$('message-even'),
-				statusStyle = $$('message-status-' + m.status);
+		const i = parseInt(index);
+		const {serverDate, onMessageDelete} = this.props;
+		const bgStyle = i % 2 === 0 ? $$('message-odd') : $$('message-even');
+		const statusStyle = $$('message-status-' + m.status);
+
+		const _date = moment((new Date(m.created_at))).from((new Date(serverDate)));
+
 
 		return <View style={[$$('message'), bgStyle, statusStyle]} key={m.id}>
 			<Text style={$$('message-text')}>{m.message}</Text>
-			<Text style={$$('message-date')}>{moment((new Date(m.created_at))).fromNow(true)}</Text>
-			<TouchableOpacity style={$$('message-delete')} onPress={() => this.props.onMessageDelete(m.id)}>
+			<Text style={$$('message-date')}>{_date}</Text>
+			<TouchableOpacity style={$$('message-delete')} onPress={() => onMessageDelete(m.id)}>
 				<Text style={$$('message-delete-icon')}>{'x'}</Text>
 			</TouchableOpacity>
 		</View>

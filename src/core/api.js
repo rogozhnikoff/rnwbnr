@@ -13,11 +13,7 @@ const param = (hash) => {
 export default {
 	get(uri) {
 		console.log("[API:GET] START", clone({uri}));
-		return fetch(__baseurl + uri)
-				.then((res) => {
-					console.log('[API:GET] END', clone({uri}), clone(res))
-					return res.json()
-				});
+		return fetch(__baseurl + uri);
 	},
 	post(uri, data) {
 		console.log("[API:POST] START", clone({uri, data}), param(data));
@@ -27,9 +23,6 @@ export default {
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			body: param(data)
-		}).then((res) => {
-			console.log("[API:POST] END", clone({uri, data}), clone(res));
-			return res.json()
 		})
 	}
 }

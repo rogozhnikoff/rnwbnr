@@ -52,6 +52,12 @@ class Root extends Component {
 		});
 
 		API.get('/get-list')
+				.then((res) => {
+					this.setState({
+						serverDate: res.headers.get('date').slice(0, -4)
+					});
+					return res.json()
+				})
 				.then((res) => this.setState({
 					messages: assign({}, this.state.messages, {
 						inProcess: false,
@@ -80,6 +86,7 @@ class Root extends Component {
 		});
 
 		API.post('/save', {message: newMessage.message})
+				.then((res) => res.json())
 				.then((res) => {
 					const list = map(this.state.messages.list, (m) => {
 						if (m.id === _randomId) {
@@ -118,6 +125,7 @@ class Root extends Component {
 		});
 
 		API.post('/delete', {id: removeId})
+				.then((res) => res.json())
 				.then((res) => {
 					const list = (() => {
 						if (res.success) {
@@ -147,12 +155,13 @@ class Root extends Component {
 	/** END: ACTIONS */
 
 	render() {
-		const {messages, stream, appError} = this.state;
+		const {messages, stream, appError, serverDate} = this.state;
 
 		return (
 				<View style={$$('container')}>
 					<ErrorView message={appError} />
-					<Chat messages={messages.list} onMessageSubmit={this.addMessage.bind(this)} onMessageDelete={this.removeMessage.bind(this)} />
+					<Chat messages={messages.list} serverDate={serverDate}
+							onMessageSubmit={this.addMessage.bind(this)} onMessageDelete={this.removeMessage.bind(this)} />
 				</View>
 		);
 	}
@@ -161,6 +170,7 @@ class Root extends Component {
 
 
 const initialState = {
+	serverDate: (new Date()),
 	stream: {
 		uri: 'http://vevoplaylist-live.hls.adaptive.level3.net/vevo/ch1/appleman.m3u8',
 		streaming: false,
