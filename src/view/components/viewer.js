@@ -39,9 +39,10 @@ class Viewer extends Component {
 	render() {
 		const {uri, streaming, message, style} = this.props;
 
-		const overlay = streaming ? null : (<View style={$$('viewer-overlay')}>
-			<Text>{message}</Text>
-		</View>);
+		//const overlay = streaming ? null : (<View style={$$('viewer-overlay')}>
+		//	<Text>{message}</Text>
+		//</View>);
+		//	{overlay}
 
 		return (<View style={[$$('viewer'), style]}>
 			<Video
@@ -59,21 +60,24 @@ class Viewer extends Component {
 					onEnd={this.onEnd}           // Callback when playback finishes
 					onError={this.videoError}    // Callback when video cannot be loaded
 			/>
-			{overlay}
 		</View>)
 	}
 }
 //resizeMode="cover"           // Fill the whole screen at aspect ratio.
 const $$ = require('../style').create({
 	'viewer': {
-		position: 'absolute',
-		left: 0, bottom: 0, right: 0,
+		alignItems: 'center',
+		paddingTop: 3
 	},
 	'viewer-video': {
+		flex: 1,
 		height: 100,
 		width: 200,
 	},
-	'viewer-overlay': {},
+	'viewer-overlay': {
+		position: 'absolute',
+		top: 0, left: 0, right: 0, bottom: 0
+	},
 })
 
 module.exports = Viewer

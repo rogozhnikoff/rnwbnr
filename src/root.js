@@ -16,7 +16,7 @@ import moment from 'moment';
 import ErrorView from './view/components/error';
 import {$$} from './view/style'
 import {
-		pick, assign, map, uniqId, reject
+		pick, assign, map, uniqueId, reject
 		} from 'lodash'
 import API from './core/api';
 
@@ -70,16 +70,16 @@ class Root extends Component {
 	addMessage(text) {
 		console.log('root::addMessage', arguments);
 
-		const _randomId = uniqId('message_');
+		const _randomId = uniqueId('message_');
 		const newMessage = {
 			id: _randomId,
 			message: text,
-			date: moment(new Date()).toString(),
+			created_at: null,
 			status: 'adding'
 		};
 
 		this.setState({
-			messages: assign({}, messages, {
+			messages: assign({}, this.state.messages, {
 				inProcess: true,
 				list: this.state.messages.list.concat(newMessage)
 			})
@@ -159,14 +159,15 @@ class Root extends Component {
 
 		return (
 				<View style={$$('container')}>
+					<View style={$$('container-line')} />
 					<ErrorView message={appError} />
-					<Chat messages={messages.list} serverDate={serverDate}
+					<Viewer {...stream} />
+					<Chat messages={messages.list} serverDate={serverDate} inProcess={messages.inProcess}
 							onMessageSubmit={this.addMessage.bind(this)} onMessageDelete={this.removeMessage.bind(this)} />
 				</View>
 		);
 	}
 }
-//<Viewer {...stream} />
 
 
 const initialState = {

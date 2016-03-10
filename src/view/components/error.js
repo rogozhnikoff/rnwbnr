@@ -17,6 +17,9 @@ class Error extends Component {
 	render() {
 		const {message} = this.props;
 
+		if(!message) {
+			return null
+		}
 		return (<View style={[$$('error'), this.props.style]}>
 			<Text style={$$('error-text')}>{message}</Text>
 		</View>)

@@ -40,6 +40,10 @@ const THEME = {
 	'container': {
 		flex: 1,
 	},
+	'container-line': {
+		height: 22,
+		backgroundColor: color.orange,
+	},
 	'paragraph': {
 		marginTop: 2,
 		marginBottom: 3,
