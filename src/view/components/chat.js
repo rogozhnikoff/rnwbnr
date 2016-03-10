@@ -86,7 +86,7 @@ const $$ = create({
 		backgroundColor: color.gray
 	},
 	'message-status-deleting': {
-		backgroundColor: color.pink
+		backgroundColor: color.indigo
 	},
 	'message-status-saved': {
 		backgroundColor: color.green

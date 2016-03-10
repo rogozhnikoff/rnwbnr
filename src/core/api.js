@@ -1,7 +1,14 @@
 // todo: make delaying, for demonstrating statuses
 
 const __baseurl = "http://my.staging.demio.com/rest/testing";
-import {clone} from 'lodash'
+import {clone, map, keys} from 'lodash'
+
+const param = (hash) => {
+	return map(
+			hash,
+			(v, k) => k + '=' + encodeURIComponent(v)
+	).join('&');
+};
 
 export default {
 	get(uri) {
@@ -13,13 +20,13 @@ export default {
 				});
 	},
 	post(uri, data) {
-		console.log("[API:POST] START", clone({uri, data}));
+		console.log("[API:POST] START", clone({uri, data}), param(data));
 		return fetch(__baseurl + uri, {
 			method: "post",
 			headers: {
-				"Content-type": "application/x-www-form-urlencoded"
+				"Content-Type": "application/x-www-form-urlencoded"
 			},
-			body: JSON.stringify(data)
+			body: param(data)
 		}).then((res) => {
 			console.log("[API:POST] END", clone({uri, data}), clone(res));
 			return res.json()

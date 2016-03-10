@@ -32,6 +32,7 @@ class Root extends Component {
 
 		this.state = initialState;
 	}
+
 	componentDidMount() {
 		this.downloadMessages();
 		// dirty: refresh messages
@@ -57,7 +58,7 @@ class Root extends Component {
 						list: map(res, richMessages)
 					})
 				}))
-			.catch(() => console.error('downloadMessages', arguments))
+				.catch(() => console.error('downloadMessages', arguments))
 	}
 
 	addMessage(text) {
@@ -83,7 +84,7 @@ class Root extends Component {
 					const list = map(this.state.messages.list, (m) => {
 						if (m.id === _randomId) {
 							return assign({}, res.data, {
-								status: res.status === 'success' ? 'saved' : 'error'
+								status: res.success ? 'saved' : 'error'
 							})
 						}
 						return m;
@@ -119,7 +120,7 @@ class Root extends Component {
 		API.post('/delete', {id: removeId})
 				.then((res) => {
 					const list = (() => {
-						if (res.status === 'success') {
+						if (res.success) {
 							return reject(this.state.messages.list, (m) => m.id === removeId);
 						} else {
 							return map(this.state.messages.list, (m) => {
@@ -151,12 +152,12 @@ class Root extends Component {
 		return (
 				<View style={$$('container')}>
 					<ErrorView message={appError} />
-					<Viewer {...stream} />
 					<Chat messages={messages.list} onMessageSubmit={this.addMessage.bind(this)} onMessageDelete={this.removeMessage.bind(this)} />
 				</View>
 		);
 	}
 }
+//<Viewer {...stream} />
 
 
 const initialState = {
