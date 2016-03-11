@@ -49,7 +49,7 @@ class Viewer extends Component {
 					source={{uri}}
 					style={$$('viewer-video')}
 					rate={1.0}                   // 0 is paused, 1 is normal.
-					volume={1.0}                 // 0 is muted, 1 is normal.
+					volume={.1}                 // 0 is muted, 1 is normal.
 					muted={false}                // Mutes the audio entirely.
 					paused={false}               // Pauses playback entirely.
 

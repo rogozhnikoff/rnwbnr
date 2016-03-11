@@ -86,7 +86,12 @@ class Root extends Component {
 		});
 
 		API.post('/save', {message: newMessage.message})
-				.then((res) => res.json())
+				.then((res) => {
+					this.setState({
+						serverDate: res.headers.get('date').slice(0, -4)
+					});
+					return res.json()
+				})
 				.then((res) => {
 					const list = map(this.state.messages.list, (m) => {
 						if (m.id === _randomId) {
@@ -125,7 +130,12 @@ class Root extends Component {
 		});
 
 		API.post('/delete', {id: removeId})
-				.then((res) => res.json())
+				.then((res) => {
+					this.setState({
+						serverDate: res.headers.get('date').slice(0, -4)
+					});
+					return res.json()
+				})
 				.then((res) => {
 					const list = (() => {
 						if (res.success) {
