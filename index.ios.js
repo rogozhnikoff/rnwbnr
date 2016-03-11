@@ -2,7 +2,7 @@
 
 import Root from './src/root';
 import {AppRegistry} from 'react-native';
-import {map, clone, cloneDeep, toArray} from 'lodash';
+import {map, clone, cloneDeep, toArray, isArguments} from 'lodash';
 
 
 const __ENV = 'development';
@@ -17,7 +17,7 @@ const __ENV = 'development';
 				console,
 				map(
 						toArray(arguments),
-						(a) => cloneDeep(a)
+						(a) => isArguments(a) ? cloneDeep(toArray(a)) : cloneDeep(a)
 				)
 		)
 	};
