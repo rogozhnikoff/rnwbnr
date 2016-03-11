@@ -19,7 +19,6 @@ import {
 		pick, assign, map, uniqueId, reject
 		} from 'lodash'
 import API from './core/api';
-import LOG from './util/log';
 
 
 StatusBarIOS.setStyle(1);
@@ -27,7 +26,7 @@ StatusBarIOS.setStyle(1);
 const richMessages = (m) => assign({}, m, {status: 'saved'}); // adding, deleting, saved
 
 class Root extends Component {
-	/* todo: move logic to redux */
+	/* todo: move console.logic to redux */
 	constructor(props) {
 		super(props);
 
@@ -44,7 +43,7 @@ class Root extends Component {
 
 	/** ACTIONS */
 	downloadMessages() {
-		LOG('root::downloadMessages', arguments);
+		console.log('root::downloadMessages', arguments);
 
 		this.setState({
 			messages: assign({}, this.state.messages, {
@@ -69,7 +68,7 @@ class Root extends Component {
 	}
 
 	addMessage(text) {
-		LOG('root::addMessage', arguments);
+		console.log('root::addMessage', arguments);
 
 		const _randomId = uniqueId('message_');
 		const newMessage = {
@@ -114,7 +113,7 @@ class Root extends Component {
 	}
 
 	removeMessage(removeId) {
-		LOG('root::removeMessage', arguments);
+		console.log('root::removeMessage', arguments);
 
 		this.setState({
 			messages: assign({}, this.state.messages, {
