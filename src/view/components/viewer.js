@@ -12,28 +12,29 @@ const {width, height} = Dimensions.get('window');
 
 // stream need codecs h264 and audio mp4a(aac)
 import Video from 'react-native-video';
+import LOG from '../../util/log';
 
 
 
 class Viewer extends Component {
 	loadStart() {
-		console.log('loadStart', arguments)
+		LOG('loadStart', arguments)
 	}
 
 	setDuration() {
-		console.log('setDuration', arguments)
+		LOG('setDuration', arguments)
 	}
 
 	setTime() {
-		console.log('setTime', arguments)
+		LOG('setTime', arguments)
 	}
 
 	onEnd() {
-		console.log('onEnd', arguments)
+		LOG('onEnd', arguments)
 	}
 
 	videoError() {
-		console.log('videoError', arguments)
+		LOG('videoError', arguments)
 	}
 
 	render() {

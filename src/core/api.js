@@ -2,6 +2,7 @@
 
 const __baseurl = "http://my.staging.demio.com/rest/testing";
 import {clone, map, keys} from 'lodash'
+import LOG from '../util/log';
 
 const param = (hash) => {
 	return map(
@@ -12,11 +13,11 @@ const param = (hash) => {
 
 export default {
 	get(uri) {
-		console.log("[API:GET] START", clone({uri}));
+		LOG("[API:GET] START", clone({uri}));
 		return fetch(__baseurl + uri);
 	},
 	post(uri, data) {
-		console.log("[API:POST] START", clone({uri, data}), param(data));
+		LOG("[API:POST] START", clone({uri, data}), param(data));
 		return fetch(__baseurl + uri, {
 			method: "post",
 			headers: {

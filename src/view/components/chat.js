@@ -13,6 +13,7 @@ import React, {
 
 const {width, height} = Dimensions.get('window');
 const DS = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+import LOG from '../../util/log';
 
 import {
 		map
@@ -61,7 +62,7 @@ class Chat extends Component {
 		const {field} = this.state;
 		const dataSource = DS.cloneWithRows(messages);
 
-		console.log('RENDER:CHAT', this.props);
+		LOG('RENDER:CHAT', this.props);
 
 		const inProcessComp = inProcess ? <Text style={$$('chat-process')}>interacting with server...</Text> : null;
 

@@ -19,6 +19,7 @@ import {
 		pick, assign, map, uniqueId, reject
 		} from 'lodash'
 import API from './core/api';
+import LOG from './util/log';
 
 
 StatusBarIOS.setStyle(1);
@@ -43,7 +44,7 @@ class Root extends Component {
 
 	/** ACTIONS */
 	downloadMessages() {
-		console.log('root::downloadMessages', arguments);
+		LOG('root::downloadMessages', arguments);
 
 		this.setState({
 			messages: assign({}, this.state.messages, {
@@ -68,7 +69,7 @@ class Root extends Component {
 	}
 
 	addMessage(text) {
-		console.log('root::addMessage', arguments);
+		LOG('root::addMessage', arguments);
 
 		const _randomId = uniqueId('message_');
 		const newMessage = {
@@ -113,7 +114,7 @@ class Root extends Component {
 	}
 
 	removeMessage(removeId) {
-		console.log('root::removeMessage', arguments);
+		LOG('root::removeMessage', arguments);
 
 		this.setState({
 			messages: assign({}, this.state.messages, {
